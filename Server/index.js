@@ -2,6 +2,9 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fs = require('fs');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 // Criando a conexão
 const db = mysql.createConnection({
@@ -55,4 +58,35 @@ app.get('/api/comments', (req, resp) => {
 
 app.listen('3001', () => {
   console.log('Ouvindo a porta 3001...');
+});
+
+// Watson
+const textToSpeech = new TextToSpeechV1({
+  authenticator: new IamAuthenticator({
+    apikey: '1xZ-T05ruBgOHJHNGUfPcxcSaEAy0fhgENSmEdzlV7i6',
+  }),
+  serviceUrl: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/95590e77-6b5a-49a5-bcaa-6d958d3dd016',
+  disableSslVerification: true,
+});
+
+app.post('/translate', (req, resp) => {
+
+  const synthesizeParams = {
+    text: req.body.text,
+    accept: 'audio/wav',
+    voice: 'pt-BR_IsabelaV3Voice',
+  }
+
+  console.log(resp)
+  
+  textToSpeech.synthesize(synthesizeParams)
+    .then(response => {
+      return textToSpeech.repairWavHeaderStream(response.result);
+    })
+    .then(buffer => {
+      fs.writeFileSync(`${req.body.text}.wav`, buffer);
+    })
+    .catch(err => {
+      console.log('error:', err);
+    });
 });

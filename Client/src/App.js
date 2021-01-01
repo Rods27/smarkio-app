@@ -67,6 +67,11 @@ const useStyles = makeStyles((theme) => (
   }
 ));
 
+function readAudioFile({ target }) {
+  const text = target.parentNode.previousSibling.innerText; // pego o texto
+  Axios.post('http://localhost:3001/translate', { text: text} ) // faço a requisição para o watson devolver o audio
+}
+
 function App() {
   const[ getResponse, setResponse ] = useState([]);
   const classes = useStyles();
@@ -104,12 +109,12 @@ function App() {
                   Comentários:
                 </Typography>
                 <Box>
-                  {getResponse.length > 0 ? getResponse.map( (comment) => (
-                  <Box className={classes.comment}>
+                  {getResponse.length > 0 ? getResponse.map( (comment, index) => (
+                  <Box key={index} className={classes.comment}>
                     <Typography variant="body2">
                       {comment.comments}
                     </Typography>
-                    <Button className={classes.listenBtn} size="small" variant="outlined">
+                    <Button className={classes.listenBtn} size="small" variant="outlined" onClick={ readAudioFile }>
                       Ouvir
                     </Button>
                   </Box>
