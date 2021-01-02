@@ -44,5 +44,5 @@ export default function AddCommentForm() {
         Cadastrar
       </Button>
     </form>
-  )
+  );
 }

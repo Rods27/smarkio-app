@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-// arrumado linha vertical commitar como style fix ,
-// adicionado context e provider commitar como feat
 import { makeStyles,
          createMuiTheme,
          ThemeProvider,
@@ -69,7 +67,7 @@ const useStyles = makeStyles((theme) => (
 
 function readAudioFile({ target }) {
   const text = target.parentNode.previousSibling.innerText; // pego o texto
-  Axios.post('http://localhost:3001/translate', { text: text} ) // faço a requisição para o watson devolver o audio
+  Axios.post('http://localhost:3001/translate', { text: text} ); // faço a requisição para o watson devolver o audio
 }
 
 function App() {
@@ -80,8 +78,7 @@ function App() {
     Axios.get('http://localhost:3001/api/comments').then((result) => {
       setResponse(result.data);
     });
-  }, [])
-
+  }, []);
   
   return (
     <ThemeProvider theme={theme}>
