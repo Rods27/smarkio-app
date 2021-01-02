@@ -5,18 +5,19 @@ const cors = require('cors');
 const fs = require('fs');
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
+const Sound = require('node-aplay');
 
 // Criando a conexão
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: ''
-})
+});
 
 const app = express();
-app.use(cors())
-app.use(express.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Connect to MySQL
 db.connect( err => {
@@ -24,7 +25,7 @@ db.connect( err => {
     throw err;
   }
   console.log('MySQL connected !');
-})
+});
 
 // Creating database
 app.get('/', (req, resp) => {
@@ -41,7 +42,7 @@ app.post('/api/insert', (req, resp) => {
       throw err;
     }
     console.log('Dado inserido com sucesso !');
-  })
+  });
 });
 
 // Get data
@@ -52,9 +53,9 @@ app.get('/api/comments', (req, resp) => {
       throw err;
     }
     resp.send(result);
-    console.log('Dados selecionados com sucesso !');
-  })
-})
+    console.log('Dados recuperados com sucesso !');
+  });
+});
 
 app.listen('3001', () => {
   console.log('Ouvindo a porta 3001...');
@@ -63,9 +64,9 @@ app.listen('3001', () => {
 // Watson
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
-    apikey: 'key',
+    apikey: '',
   }),
-  serviceUrl: 'url',
+  serviceUrl: '',
   disableSslVerification: true,
 });
 
@@ -76,15 +77,14 @@ app.post('/translate', (req, resp) => {
     accept: 'audio/wav',
     voice: 'pt-BR_IsabelaV3Voice',
   }
-
-  console.log(resp)
   
   textToSpeech.synthesize(synthesizeParams)
     .then(response => {
       return textToSpeech.repairWavHeaderStream(response.result);
     })
     .then(buffer => {
-      fs.writeFileSync(`${req.body.text}.wav`, buffer);
+      fs.writeFileSync(`../Client/public/sounds/${req.body.text}.wav`, buffer);
+      new Sound(`../Client/public/sounds/${req.body.text}.wav`).play();
     })
     .catch(err => {
       console.log('error:', err);
