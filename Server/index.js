@@ -64,9 +64,9 @@ app.listen('3001', () => {
 // Watson
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
-    apikey: '1xZ-T05ruBgOHJHNGUfPcxcSaEAy0fhgENSmEdzlV7i6',
+    apikey: '',
   }),
-  serviceUrl: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/95590e77-6b5a-49a5-bcaa-6d958d3dd016',
+  serviceUrl: '',
   disableSslVerification: true,
 });
 
