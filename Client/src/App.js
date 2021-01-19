@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-
+import AddCommentForm from './components/AddCommentForm';
+import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import { makeStyles,
-         createMuiTheme,
-         ThemeProvider,
          Grid,
          Paper,
          Box, 
@@ -11,35 +10,9 @@ import { makeStyles,
          Button,
          Hidden} from '@material-ui/core';
 
-import AddCommentForm from './components/AddCommentForm';
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#e0e0e0',
-      light: '#ffffff',
-      dark: '#aeaeae',
-      contrastText: '#000000',
-    },
-    secondary: {
-      main: '#546e7a',
-      light: '#819ca9',
-      dark: '#29434e',
-      contrastText: '#ffffff'
-    }
-  },
-  typography: {
-    fontSize: 14,
-  },
-});
 
 const useStyles = makeStyles((theme) => (
   {
-    root: {
-      backgroundColor: '#e0e0e0',
-      padding: theme.spacing(4),
-    },
     gridItem: {
       padding: theme.spacing(1),
     },
@@ -81,8 +54,6 @@ function App() {
   }, []);
   
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
         <Grid container xs={12} sm={12} spacing={1}>
 
           <Grid item xs={12} sm={5} md={5} className={classes.gridItem}>
@@ -102,28 +73,28 @@ function App() {
           <Grid item xs={12} sm={5} md={5} className={classes.gridItem}>
             <Paper className={classes.paper}>
               <Box>
+
                 <Typography variant="h6">
                   Comentários:
                 </Typography>
+
                 <Box>
                   {getResponse.length > 0 ? getResponse.map( (comment, index) => (
                   <Box key={index} className={classes.comment}>
                     <Typography variant="body2">
                       {comment.comments}
                     </Typography>
-                    <Button className={classes.listenBtn} size="small" variant="outlined" onClick={ readAudioFile }>
+                    <Button className={classes.listenBtn} size="small" variant="outlined" endIcon={<AudiotrackIcon />} onClick={ readAudioFile }>
                       Ouvir
                     </Button>
                   </Box>
                   )) : null}
                 </Box>
+
               </Box>
             </Paper>
           </Grid>
-
         </Grid>
-      </div>
-    </ThemeProvider>
   );
 }
 
