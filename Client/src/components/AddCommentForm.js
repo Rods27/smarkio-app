@@ -1,27 +1,25 @@
-import React, {useContext} from 'react';
-import { makeStyles, TextField, Button } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
+import { TextField, Button } from '@material-ui/core';
 import MyContext from '../context/MyContext';
 import Axios from 'axios';
+import SendIcon from '@material-ui/icons/Send';
 
-const useStyles = makeStyles((theme) => (
-  {
-    button: {
-      marginTop: theme.spacing(1),
-    },
-  }
-));
 
 export default function AddCommentForm() {
   const { getComment, setComment } = useContext(MyContext);
-  const classes = useStyles();
+  const [isInvalid, setInvalid] = useState(true);
 
   function handleComments({ target: { value } }) {
+    setInvalid(false);
     setComment(value);
   }
 
   function handleClick() {
-    Axios.post('http://localhost:3001/api/insert', { comments: getComment });
-    alert('Comentário inserido com sucesso !');
+    if(getComment.length > 0 ) {
+      Axios.post('http://localhost:3001/api/insert', { comments: getComment });
+      window.location.reload();
+    }
+    return setInvalid(true);
   }
 
   return (
@@ -36,11 +34,13 @@ export default function AddCommentForm() {
       />
 
       <Button
-      className={classes.button}
       color="secondary"
       variant="outlined"
+      endIcon={<SendIcon />}
       fullWidth
-      onClick={ handleClick }>
+      onClick={ handleClick }
+      disabled={isInvalid}
+      >
         Cadastrar
       </Button>
     </form>
