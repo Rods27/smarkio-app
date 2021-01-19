@@ -17,7 +17,9 @@ export default function AddCommentForm() {
   function handleClick() {
     if(getComment.length > 0 ) {
       Axios.post('http://localhost:3001/api/insert', { comments: getComment });
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 500)
     }
     return setInvalid(true);
   }
