@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => (
     comment: {
       margin: theme.spacing(2),
     },
+    commentsBox: {
+      maxHeight: '700px',
+      overflow: 'auto',
+    },
     listenBtn: {
       marginTop: theme.spacing(2),
     },
@@ -78,7 +82,7 @@ function App() {
                   Comentários:
                 </Typography>
 
-                <Box>
+                <Box className={classes.commentsBox}>
                   {getResponse.length > 0 ? getResponse.map( (comment, index) => (
                   <Box key={index} className={classes.comment}>
                     <Typography variant="body2">
