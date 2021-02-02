@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => (
 ));
 
 function readAudioFile({ target }) {
-  const text = target.parentNode.previousSibling.innerText; // pego o texto
-  Axios.post('http://localhost:3001/translate', { text: text} ); // faço a requisição para o watson devolver o audio
+  const text = target.parentNode.previousSibling.innerText; 
+  Axios.post('http://localhost:3001/translate', { text: text} ); 
 }
 
 function App() {

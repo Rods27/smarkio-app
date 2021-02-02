@@ -7,7 +7,7 @@
 <br>
 
 <h1 align="center">
-  Smarkio App
+  SMARKIO App
 </h1>
 <h3>
   Uma aplicação simples, que transcreve textos em áudio.
