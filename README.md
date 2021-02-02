@@ -17,7 +17,7 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Nodejs v14.15.4](https://nodejs.org/en/)
-- [MySQL 8.0.23](https://www.mysql.com/) / [MariaDB v10.5.8](https://mariadb.org/)
+- [MySQL 8.0.23](https://www.mysql.com/) ou [MariaDB v10.5.8](https://mariadb.org/)
 - [IBM Watson - text-to-speech](https://www.ibm.com/br-pt/cloud/watson-text-to-speech)
 - [React v17.0.1](https://reactjs.org)
 - [Material UI](https://material-ui.com/)
